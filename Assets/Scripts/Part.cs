@@ -26,12 +26,11 @@ public class Part : MonoBehaviour
     {
         rigidBody.isKinematic = true;
         grabInteractable.enabled = false;
-        transform.SetParent(jointPoint.transform);
         gameObject.transform.position = jointPoint.transform.position;
         gameObject.transform.rotation = jointPoint.transform.rotation;
         state = PartState.Installed;
+        Destroy(jointPoint);
     }
-
 }
 public enum PartState
 {

@@ -14,7 +14,7 @@ public class JointPoint : MonoBehaviour
 
     private GameObject currArrow = null;
 
-    private float arrowOffset = 0.5f;
+    private float arrowOffset = 1f;
 
     [SerializeField]
     private Vector3 fixedPosition = Vector3.zero;
@@ -43,8 +43,8 @@ public class JointPoint : MonoBehaviour
         currArrow = Instantiate(ArrowPrefab);
 
         currArrow.transform.SetParent(gameObject.transform);
-        currArrow.transform.localPosition = Vector3.up * 1f;
-        currArrow.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        currArrow.transform.localPosition = new Vector3(0, arrowOffset, 0);
+        currArrow.transform.localRotation = Quaternion.identity;
     }
 
     void Update()
