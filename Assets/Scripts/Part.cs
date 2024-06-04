@@ -28,6 +28,7 @@ public class Part : MonoBehaviour
         grabInteractable.enabled = false;
         transform.SetParent(jointPoint.transform);
         gameObject.transform.position = jointPoint.transform.position;
+        gameObject.transform.rotation = jointPoint.transform.rotation;
         state = PartState.Installed;
     }
 
