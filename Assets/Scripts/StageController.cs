@@ -26,7 +26,6 @@ public class StageController : MonoBehaviour
     {
         if (currentStage < 4 && jointPoints[currentStage].IsDestroyed())
         {
-            Debug.Log("Current stage: " + currentStage + "; Playing clip " + (currentStage));
             sounds[currentStage].Play();
 
             currentStage += 1;

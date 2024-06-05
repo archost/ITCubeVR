@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class HitCheck : MonoBehaviour
 {
-    public GameObject targetObject; // Ссылка на объект, с которым нужно проверить столкновение
+    public GameObject toDestroy;
 
-    void OnCollisionEnter(Collision collision)
-    {
-        // Проверяем, является ли объект столкновения тем, который нам нужен
-        if (collision.gameObject == targetObject)
-        {
-            Debug.Log("Collided with the target object: " + targetObject.name);
-        }
-    }
+    private int health = 100;
+
+    public AudioSource oi_blyat;
 
     void OnTriggerEnter(Collider other)
     {
+        Bullet bullet = other.GetComponent<Bullet>();
 
-        // Проверяем, является ли объект триггера тем, который нам нужен
-        if (other.gameObject == targetObject)
+        if (bullet != null)
         {
-            Debug.Log("Triggered by the target object: " + targetObject.name);
+            oi_blyat.Play();
+            health -= bullet.damage;
+        }
+        else
+        {
+            oi_blyat.Play();
+            health -= 5;
+        }
+
+    }
+
+    void Update()
+    {
+        if (health <= 0)
+        {
+            Destroy(toDestroy);
+            Destroy(gameObject);
         }
     }
 
