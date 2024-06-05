@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using System.Transactions;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class StageController : MonoBehaviour
 {
+    public GameObject mainLight;
+    public GameObject redLight;
+
+    public GameObject igrek;
+
+    private bool doomMode = false;
+
     [SerializeField]
     private List<GameObject> jointPoints = new List<GameObject>();
 
@@ -14,6 +22,10 @@ public class StageController : MonoBehaviour
     public List<AudioSource> sounds;
 
     public AudioSource bgMusic;
+
+    public AudioSource onDeath;
+
+    public AudioSource scaryMusic;
 
     void Start()
     {
@@ -24,7 +36,14 @@ public class StageController : MonoBehaviour
 
     void Update()
     {
-        if (currentStage < 4 && jointPoints[currentStage].IsDestroyed())
+        if (igrek.IsDestroyed() && !doomMode)
+        {
+            onDeath.Play();
+            doomMode = true;
+            DoomMode();
+        }
+
+        if (currentStage < 4 && jointPoints[currentStage].IsDestroyed() && !doomMode)
         {
             sounds[currentStage].Play();
 
@@ -40,5 +59,13 @@ public class StageController : MonoBehaviour
     void SetJointPoint()
     {
         jointPoints[currentStage].SetActive(true);
+    }
+
+    void DoomMode()
+    {
+        bgMusic.Stop();
+        mainLight.SetActive(false);
+        redLight.SetActive(true);
+        scaryMusic.Play();
     }
 }

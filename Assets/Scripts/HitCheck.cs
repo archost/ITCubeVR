@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class HitCheck : MonoBehaviour
 {
-    public GameObject toDestroy;
-
     private int health = 100;
 
-    public AudioSource oi_blyat;
+    public AudioSource hitSound;
 
     void OnTriggerEnter(Collider other)
     {
@@ -16,22 +14,15 @@ public class HitCheck : MonoBehaviour
 
         if (bullet != null)
         {
-            oi_blyat.Play();
+            hitSound.Play();
             health -= bullet.damage;
         }
-        else
-        {
-            oi_blyat.Play();
-            health -= 5;
-        }
-
     }
 
     void Update()
     {
         if (health <= 0)
         {
-            Destroy(toDestroy);
             Destroy(gameObject);
         }
     }
