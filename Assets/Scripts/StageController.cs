@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,9 +11,14 @@ public class StageController : MonoBehaviour
 
     private int currentStage = 0;
 
+    public List<AudioSource> sounds;
+
+    public AudioSource bgMusic;
+
     void Start()
     {
-        
+        jointPoints[0].SetActive(true);
+        bgMusic.Play();
     }
 
 
@@ -20,14 +26,20 @@ public class StageController : MonoBehaviour
     {
         if (currentStage < 4 && jointPoints[currentStage].IsDestroyed())
         {
-            SetJointPoint();
+            Debug.Log("Current stage: " + currentStage + "; Playing clip " + (currentStage));
+            sounds[currentStage].Play();
+
+            currentStage += 1;
+            if (currentStage < 4)
+                SetJointPoint();
+
+            if (currentStage == 4)
+                bgMusic.Stop();
         } 
     }
 
     void SetJointPoint()
     {
-        currentStage += 1;
-        if (currentStage < 4)
-            jointPoints[currentStage].SetActive(true);
+        jointPoints[currentStage].SetActive(true);
     }
 }

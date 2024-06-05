@@ -56,7 +56,6 @@ public class JointPoint : MonoBehaviour
     {
         if (other.gameObject == _suitablePart.gameObject && _suitablePart.state != PartState.Installed)
         {
-            Debug.Log("Triggered by the target object: " + _suitablePart.partId);
             _suitablePart.Install(this.gameObject);
         }
     }
