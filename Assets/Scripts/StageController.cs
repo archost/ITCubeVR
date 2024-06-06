@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class StageController : MonoBehaviour
 {
+    public List<GameObject> lamps = new List<GameObject>();
+
     public GameObject mainLight;
     public GameObject redLight;
 
@@ -45,6 +47,7 @@ public class StageController : MonoBehaviour
 
         if (currentStage < 4 && jointPoints[currentStage].IsDestroyed() && !doomMode)
         {
+            lamps[currentStage].SetActive(true);
             sounds[currentStage].Play();
 
             currentStage += 1;

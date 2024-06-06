@@ -22,14 +22,14 @@ public class Part : MonoBehaviour
         
     }
 
-    public void Install(GameObject jointPoint)
+    public void Install(GameObject jointPoint, Vector3 fixedPosition)
     {
-        rigidBody.isKinematic = true;
         grabInteractable.enabled = false;
-        gameObject.transform.position = jointPoint.transform.position;
+        gameObject.transform.position = jointPoint.transform.position + fixedPosition;
         gameObject.transform.rotation = jointPoint.transform.rotation;
         state = PartState.Installed;
         Destroy(jointPoint);
+        rigidBody.isKinematic = true;
     }
 }
 public enum PartState

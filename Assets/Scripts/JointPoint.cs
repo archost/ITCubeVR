@@ -56,7 +56,7 @@ public class JointPoint : MonoBehaviour
     {
         if (other.gameObject == _suitablePart.gameObject && _suitablePart.state != PartState.Installed)
         {
-            _suitablePart.Install(this.gameObject);
+            _suitablePart.Install(this.gameObject, fixedPosition);
         }
     }
 }
