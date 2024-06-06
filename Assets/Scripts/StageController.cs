@@ -7,55 +7,47 @@ using UnityEngine;
 
 public class StageController : MonoBehaviour
 {
-    public List<GameObject> lamps = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> jointPoints = new List<GameObject>();
+
+    private SoundController soundController;
 
     public GameObject mainLight;
+
     public GameObject redLight;
 
     public GameObject igrek;
 
     private bool doomMode = false;
 
-    [SerializeField]
-    private List<GameObject> jointPoints = new List<GameObject>();
-
     private int currentStage = 0;
-
-    public List<AudioSource> sounds;
-
-    public AudioSource bgMusic;
-
-    public AudioSource onDeath;
-
-    public AudioSource scaryMusic;
 
     void Start()
     {
-        jointPoints[0].SetActive(true);
-        bgMusic.Play();
+        soundController.BackGround(true);
     }
-
 
     void Update()
     {
+        int stagesCount = jointPoints.Count;
+
         if (igrek.IsDestroyed() && !doomMode)
         {
-            onDeath.Play();
             doomMode = true;
             DoomMode();
         }
 
-        if (currentStage < 4 && jointPoints[currentStage].IsDestroyed() && !doomMode)
+        if (!doomMode && currentStage < stagesCount && !jointPoints[currentStage].activeSelf)
         {
-            lamps[currentStage].SetActive(true);
-            sounds[currentStage].Play();
-
-            currentStage += 1;
-            if (currentStage < 4)
+            soundController.StageSound(currentStage);
+            
+            if (currentStage < stagesCount)
                 SetJointPoint();
 
-            if (currentStage == 4)
-                bgMusic.Stop();
+            if (currentStage == stagesCount)
+                soundController.BackGround(false);
+
+            currentStage += 1;
         } 
     }
 
@@ -66,9 +58,9 @@ public class StageController : MonoBehaviour
 
     void DoomMode()
     {
-        bgMusic.Stop();
+        soundController.Death();
+        soundController.BackGround(false);
         mainLight.SetActive(false);
         redLight.SetActive(true);
-        scaryMusic.Play();
     }
 }

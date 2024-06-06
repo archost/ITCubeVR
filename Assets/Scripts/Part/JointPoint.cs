@@ -6,10 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class JointPoint : MonoBehaviour
 {
-    [SerializeField]
-    private Part _suitablePart = null;
+    public PartData suitablePart = null;
 
-    [SerializeField]
     public GameObject ArrowPrefab = null;
 
     private GameObject currArrow = null;
@@ -19,13 +17,10 @@ public class JointPoint : MonoBehaviour
     [SerializeField]
     private Vector3 fixedPosition = Vector3.zero;
 
-    [SerializeField]
-    private Quaternion fixedRotation = Quaternion.identity;
-
     private void Awake()
     {
         if (ArrowPrefab == null) ArrowPrefab = Resources.Load<GameObject>("Prefabs/Arrow");
-        if (_suitablePart == null) Debug.LogError("No suitable PartData found!", gameObject);
+        if (suitablePart == null) Debug.LogError("No suitable PartData found!", gameObject);
     }
 
     void Start()
@@ -52,11 +47,22 @@ public class JointPoint : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    public void ForceAttach(Part part)
     {
-        if (other.gameObject == _suitablePart.gameObject && _suitablePart.state != PartState.Installed)
+        part.Install(gameObject.transform.position + fixedPosition, gameObject.transform.rotation);
+        gameObject.SetActive(false);
+        if (currArrow != null) Destroy(currArrow);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out Part part))
         {
-            _suitablePart.Install(this.gameObject, fixedPosition);
+            if (part.PartID == suitablePart.ID)
+            {
+                ForceAttach(part);
+            }
         }
     }
+
 }
