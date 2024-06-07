@@ -37,7 +37,7 @@ public class StageController : MonoBehaviour
             DoomMode();
         }
 
-        if (!doomMode && currentStage < stagesCount && !jointPoints[currentStage].activeSelf)
+        if (!doomMode && currentStage <= stagesCount && !jointPoints[currentStage].activeSelf)
         {
             soundController.StageSound(currentStage);
             
