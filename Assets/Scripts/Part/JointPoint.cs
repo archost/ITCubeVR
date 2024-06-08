@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class JointPoint : MonoBehaviour
 {
+    public StageController sc = null;
+
     public PartData suitablePart = null;
 
     public GameObject ArrowPrefab = null;
@@ -52,6 +54,7 @@ public class JointPoint : MonoBehaviour
         part.Install(gameObject.transform.position + fixedPosition, gameObject.transform.rotation);
         gameObject.SetActive(false);
         if (currArrow != null) Destroy(currArrow);
+        sc.currentStage += 1;
     }
 
     private void OnTriggerEnter(Collider other)

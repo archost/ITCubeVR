@@ -10,7 +10,10 @@ public class StageController : MonoBehaviour
     [SerializeField]
     private List<GameObject> jointPoints = new List<GameObject>();
 
+    [SerializeField]
     private SoundController soundController;
+
+    public GameObject Bot;
 
     public GameObject mainLight;
 
@@ -20,7 +23,7 @@ public class StageController : MonoBehaviour
 
     private bool doomMode = false;
 
-    private int currentStage = 0;
+    public int currentStage = 0;
 
     void Start()
     {
@@ -37,18 +40,20 @@ public class StageController : MonoBehaviour
             DoomMode();
         }
 
-        if (!doomMode && currentStage <= stagesCount && !jointPoints[currentStage].activeSelf)
+        if (!doomMode && currentStage < stagesCount && !jointPoints[currentStage].activeSelf)
         {
             soundController.StageSound(currentStage);
             
-            if (currentStage < stagesCount)
-                SetJointPoint();
+            SetJointPoint();
+        }
 
-            if (currentStage == stagesCount)
-                soundController.BackGround(false);
-
+        if (currentStage == stagesCount)
+        {
+            soundController.BackGround(false);
+            soundController.StageSound(currentStage);
             currentStage += 1;
-        } 
+        }
+            
     }
 
     void SetJointPoint()
@@ -58,6 +63,7 @@ public class StageController : MonoBehaviour
 
     void DoomMode()
     {
+        Bot.SetActive(true);
         soundController.Death();
         soundController.BackGround(false);
         mainLight.SetActive(false);

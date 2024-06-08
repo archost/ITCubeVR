@@ -55,9 +55,9 @@ public class Part : MonoBehaviour
             case PartState.Fixed:
                 break;
             case PartState.Installed:
+                if (grabInteractable != null) grabInteractable.enabled = false;
                 col.isTrigger = false;
                 rb.isKinematic = true;
-                if (grabInteractable != null) grabInteractable.enabled = false;
                 break;
             case PartState.Await:
                 break;

@@ -12,6 +12,8 @@ public class SoundController : MonoBehaviour
 
     public AudioSource scaryMusic;
 
+    public AudioSource backRoomsMusic;
+
     void Start()
     {
         
@@ -42,6 +44,12 @@ public class SoundController : MonoBehaviour
     {
         onDeath.Play();
         scaryMusic.Play();
+    }
+
+    public void BackRooms()
+    {
+        scaryMusic.Stop();
+        backRoomsMusic.Play();
     }
 
 }
